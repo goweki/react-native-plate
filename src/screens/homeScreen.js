@@ -34,29 +34,21 @@ export default function Home({ navigation }) {
     ,[selectedService]);
 
     const renderServiceDetails = () => {
-        if (selectedService) {
+        if (serviceDetails) { return
+            serviceDetails.map((item) => (
+                <Text key={item.id}>{()=>item.serviceName}</Text>
+                ))
 
-            return (
-                <View style={styles.iconRow}>
-                <Button
-                    style={{
-                        width: '100%',
-                        margin: 0,
-                        marginVertical: 16,
-                        //paddingVertical: 2,
-                    }}
-                    mode="contained"
-                    onPress={() => navigation.navigate('Submit')}>
-                    Subscribe
-                </Button>
-            </View>
-            );
+                
+
+
+
+
         }
-        return null;
     }
 
     const renderSubscribeButton = () => {
-        if (uiData && uiData) {
+        if (selectedService) {
             return (
                 <View style={styles.iconRow}>
                 <Button
@@ -84,7 +76,7 @@ export default function Home({ navigation }) {
         <View style={styles.container}>
             <View>
             <Dropdown style={styles.padding}
-                placeholder="Select service...."
+                placeholder={serviceDetails ? serviceDetails.serviceName : "Select a service"}
                 items={uiData}
                 setValue={(service_) => setService(service_)}
                 schema={{
@@ -93,7 +85,16 @@ export default function Home({ navigation }) {
                         }}
             />
             <Text>
-            {JSON.stringify(serviceDetails)}
+            {JSON.stringify(serviceDetails,["serviceName","pricing","discountPercent"],5)}
+
+            <ul>
+                {serviceDetails.map((service) =>
+                    <ListItem key={service.id}
+                            value={service.serviceName} />
+                )}
+            </ul>
+
+
             </Text>
              </View>
             
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
         marginVertical: 6,
         flex: 1,
         flexDirection: "column",
-        justifyContent: 'space-around',
+        //justifyContent: 'space-around',
         alignItems: 'center',
         //color: Theme.colors.primary,
     },
