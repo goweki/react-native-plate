@@ -53,7 +53,7 @@ export default function Home({ navigation }) {
                     </DataTable.Row>
                     <DataTable.Row >
                         <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Total </DataTable.Cell>
-                        <DataTable.Cell style={[{backgroundColor:Theme.colors.secondaryFade},{alignItems: 'centre'}]}>{getTotalPayable()}  shillings</DataTable.Cell>
+                        <DataTable.Cell textStyle={{fontWeight:'bold'}} >{getTotalPayable()}  shillings</DataTable.Cell>
                     </DataTable.Row>
                 </DataTable>
             )
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         //padding:12,
         //backgroundColor:Theme.colors.primaryAscent,
         //flexDirection: "column",
-        //justifyContent: 'centre',
+        //justifyContent: 'center',
         //alignItems: 'center',
     //}
 });
