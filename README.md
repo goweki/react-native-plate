@@ -4,6 +4,6 @@ react-native playground
 
 # Credentials
 
-email: user@email.com
+email: a@email.com
 
 password: password
