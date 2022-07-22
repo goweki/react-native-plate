@@ -40,16 +40,20 @@ export default function Home({ navigation }) {
 
             return (
                 <DataTable style ={styles.row}>
-                    <DataTable.Row style ={{flex:1}}>
+                    <DataTable.Row>
                         <DataTable.Cell textStyle={{fontWeight:'bold'}}>{serviceDetails.serviceName}</DataTable.Cell>
                     </DataTable.Row>
                     <DataTable.Row>
-                        <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Price (Ksh): </DataTable.Cell>
+                        <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Price </DataTable.Cell>
                         <DataTable.Cell>{serviceDetails.pricing}</DataTable.Cell>
                     </DataTable.Row>
                     <DataTable.Row>
-                        <DataTable.Cell  textStyle={{color:Theme.colors.grayFade2}}>Discount (%): </DataTable.Cell>
+                        <DataTable.Cell  textStyle={{color:Theme.colors.grayFade2}}>Discount (%) </DataTable.Cell>
                         <DataTable.Cell>{serviceDetails.discountPercent}</DataTable.Cell>
+                    </DataTable.Row>
+                    <DataTable.Row >
+                        <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Total </DataTable.Cell>
+                        <DataTable.Cell style={[{backgroundColor:Theme.colors.secondaryFade},{alignItems: 'centre'}]}>{getTotalPayable()}  shillings</DataTable.Cell>
                     </DataTable.Row>
                 </DataTable>
             )
@@ -66,7 +70,7 @@ export default function Home({ navigation }) {
                         style={{
                             width: '100%',
                             margin: 0,
-                            marginVertical: '25%',
+                            marginVertical: '20%',
                             paddingVertical: 2,
                         }}
                         mode="contained"
@@ -80,6 +84,12 @@ export default function Home({ navigation }) {
 
     if (!uiData) {
         return (<Loading />)
+    }
+
+    function getTotalPayable(){
+        return(
+            ((100 - serviceDetails.discountPercent)*serviceDetails.pricing/100)
+            )
     }
 
     return (
