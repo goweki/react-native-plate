@@ -1,46 +1,58 @@
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Dropdown from '../components/dropdownBox';
 import Button, { ButtonFill } from '../components/button';
-import {FetchServices} from '../helpers/uiFetch';
+import { FetchServices } from '../helpers/uiFetch';
 import Loading from '../components/loading';
 //import { ButtonFill } from '../components/button';
 import { Theme } from '../core/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DataTable } from 'react-native-paper';
 
 export default function Home({ navigation }) {
     const [uiData, setUIdata] = useState();
     const [selectedService, setService] = useState();
     const [serviceDetails, setServiceDetails] = useState();
 
-    useEffect(()=>{
-        if (!uiData){
+    useEffect(() => {
+        if (!uiData) {
             FetchServices()
-            .then(async (data) => {
-                console.log("...................................................")
-                console.log("Services........................" + JSON.stringify(data));
-                setUIdata(data);
-                await AsyncStorage.setItem('UIdata', JSON.stringify (data));
-            })
+                .then(async (data) => {
+                    console.log("...................................................")
+                    console.log("Services........................" + JSON.stringify(data));
+                    setUIdata(data);
+                    await AsyncStorage.setItem('UIdata', JSON.stringify(data));
+                })
         }
 
-        if (selectedService){
-                var _serviceDetails = uiData.find(det => det.id === selectedService);
-                console.log("selected Service........................" + JSON.stringify(_serviceDetails ));
-                setServiceDetails(_serviceDetails);
-            }
+        if (selectedService) {
+            var _serviceDetails = uiData.find(det => det.id === selectedService);
+            console.log("selected Service........................" + JSON.stringify(_serviceDetails));
+            setServiceDetails(_serviceDetails);
+        }
     }
-    ,[selectedService]);
+        , [selectedService]);
 
     const renderServiceDetails = () => {
-        if (serviceDetails) { return
-            serviceDetails.map((item) => (
-                <Text key={item.id}>{()=>item.serviceName}</Text>
-                ))
+        if (serviceDetails) {
 
-                
 
+            return (
+                <DataTable style ={styles.row}>
+                    <DataTable.Row style ={{flex:1}}>
+                        <DataTable.Cell textStyle={{fontWeight:'bold'}}>{serviceDetails.serviceName}</DataTable.Cell>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                        <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Price (Ksh): </DataTable.Cell>
+                        <DataTable.Cell>{serviceDetails.pricing}</DataTable.Cell>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                        <DataTable.Cell  textStyle={{color:Theme.colors.grayFade2}}>Discount (%): </DataTable.Cell>
+                        <DataTable.Cell>{serviceDetails.discountPercent}</DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable>
+            )
 
 
 
@@ -50,47 +62,46 @@ export default function Home({ navigation }) {
     const renderSubscribeButton = () => {
         if (selectedService) {
             return (
-                <View style={styles.iconRow}>
-                <Button
-                    style={{
-                        width: '100%',
-                        margin: 0,
-                        marginVertical: 16,
-                        //paddingVertical: 2,
-                    }}
-                    mode="contained"
-                    onPress={() => navigation.navigate('Submit')}>
-                    Subscribe
-                </Button>
-            </View>
+                    <Button
+                        style={{
+                            width: '100%',
+                            margin: 0,
+                            marginVertical: '25%',
+                            paddingVertical: 2,
+                        }}
+                        mode="contained"
+                        onPress={() => navigation.navigate('Submit')}>
+                        Subscribe
+                    </Button>
             );
         }
         return null;
     }
 
     if (!uiData) {
-        return(<Loading />)
+        return (<Loading />)
     }
 
     return (
         <View style={styles.container}>
-            <View>
-            <Dropdown style={styles.padding}
-                placeholder={serviceDetails ? serviceDetails.serviceName : "Select a service"}
-                items={uiData}
-                setValue={(service_) => setService(service_)}
-                schema={{
-                            label: 'serviceName',
-                            value: 'id'
-                        }}
-            />
-            <Text>
-            {JSON.stringify(serviceDetails,["serviceName","pricing","discountPercent"],5)}
-            </Text>
-             </View>
-            
+            <View style={{width:'100%'}}>
+                <Dropdown style={styles.padding}
+                    placeholder={serviceDetails ? serviceDetails.serviceName : "Select a service"}
+                    items={uiData}
+                    setValue={(service_) => setService(service_)}
+                    schema={{
+                        label: 'serviceName',
+                        value: 'id'
+                    }}
+                />
+                <View style ={[{width:'100%'}]}>
+                    {/*{JSON.stringify(serviceDetails, ["serviceName", "pricing", "discountPercent"], 5)}*/}
+                    {renderServiceDetails()}
+                </View>
+            </View>
+
             {renderSubscribeButton()}
-           
+
         </View>
 
     );
@@ -109,12 +120,12 @@ const styles = StyleSheet.create({
     padding: {
         marginVertical: 12
     },
-    iconRow: {
-        width: '100%',
+    //row: {
+        //width: '100%',
         //padding:12,
         //backgroundColor:Theme.colors.primaryAscent,
-        flexDirection: "row",
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    }
+        //flexDirection: "column",
+        //justifyContent: 'centre',
+        //alignItems: 'center',
+    //}
 });
