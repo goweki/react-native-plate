@@ -86,15 +86,6 @@ export default function Home({ navigation }) {
             />
             <Text>
             {JSON.stringify(serviceDetails,["serviceName","pricing","discountPercent"],5)}
-
-            <ul>
-                {serviceDetails.map((service) =>
-                    <ListItem key={service.id}
-                            value={service.serviceName} />
-                )}
-            </ul>
-
-
             </Text>
              </View>
             
