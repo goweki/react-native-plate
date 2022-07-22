@@ -14,15 +14,21 @@ export async function FetchServices() {
   console.log('New request to fetch UI data:..................... ');
 
   var uiData = []
-
-  await fetch(
+  try {
+    await fetch(
       'https://mawingu.cbaloop.com/cba/api/v1/service/getServices',
       requestOptions,
-  )
-  .then(async (data) => {
-    console.log('Fetch status:..................... ' + data.status);
-    const res = await data.json()
-    uiData = res.data;
-    })
-    return uiData;
+    )
+      .then(async (data) => {
+        console.log('Fetch status:..................... ' + data.status);
+        const res = await data.json()
+        uiData = res.data;
+      })
+    
+  }
+  catch (err) {
+    console.log('..................................................');
+    console.log('Autologin failed:................................ ');
+  }
+  return uiData;
 }
