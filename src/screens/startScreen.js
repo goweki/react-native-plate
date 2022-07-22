@@ -4,7 +4,7 @@ import Logo from '../components/logo';
 import Button from '../components/button';
 import { Theme } from '../core/theme';
 
-export default function LoginScreen({navigation}) {
+export default function StartScreen({navigation}) {
   return(
     <View style={styles.centre}>
     <Logo />
