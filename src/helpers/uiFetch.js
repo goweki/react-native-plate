@@ -1,7 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export async function FetchServices() {
-  const storedToken = await AsyncStorage.getItem('token');
+  try{
+  var storedToken =  JSON.parse(await AsyncStorage.getItem('userAuth')).token;}
+  catch (err){
+    console.log('..................................................');
+    console.log('Autologin Failed:.......................... ' + err);
+    return null;
+  }
   var requestOptions = {
     method: 'GET',
     headers: {

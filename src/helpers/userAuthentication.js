@@ -33,10 +33,10 @@ export async function UserAuth(username, password) {
         return "Authentication Failed"; }
       
       const res = await fetchResponse.json();
-      const token = res.data.token;
-      if (token) {
-        console.log("token..........................." + token);
-        return token;}
+      const _user = res.data;
+      if (_user) {
+        console.log("token..........................." + _user.token);
+        return _user;}
     } catch (e) {
       console.log("......................................................")
       console.log("Could not connect to server...........................");

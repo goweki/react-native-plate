@@ -55,7 +55,7 @@ export default function App() {
                   [ { text: "Cancel"},
                     {},
                     {text: 'Logout', onPress: async () => {
-                      await AsyncStorage.removeItem('token');
+                      await AsyncStorage.removeItem('userAuth');
                       await navigation.reset({
                           index: 0,
                           routes: [{ name: 'Welcome' }],

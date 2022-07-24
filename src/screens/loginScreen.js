@@ -29,9 +29,9 @@ export default function LoginScreen({ navigation }) {
             return;
         }
 
-        let token = await UserAuth(email.value, password.value);
+        let userAuth = await UserAuth(email.value, password.value);
 
-        if (token === "Possible network error" || token === null || token === '') {
+        if (userAuth === "Possible network error" || userAuth === null || userAuth === '') {
             console.log("........................................");
             console.log('Check internet connection and try again.... ');
             setNetworkError(true);
@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }) {
             return;
         }
 
-        if (token === "Authentication Failed" || token === undefined) {
+        if (userAuth === "Authentication Failed" || userAuth === undefined) {
             console.log(".............................................");
             //console.log('Authentication failed, check credentials.... ');
             setauthenticationError(true);
@@ -48,12 +48,12 @@ export default function LoginScreen({ navigation }) {
         }
 
         try {
-            await AsyncStorage.setItem('token', token);
+            await AsyncStorage.setItem('userAuth', JSON.stringify(userAuth));
         } catch (e) {
             console.log(e);
         }
 
-        const storedToken = await AsyncStorage.getItem('token');
+        const storedToken =  JSON.parse(await AsyncStorage.getItem('userAuth')).token
         console.log('................................................');
         console.log('token stored:.................... ' + storedToken);
         navigation.reset({

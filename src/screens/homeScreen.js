@@ -4,6 +4,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import Dropdown from '../components/dropdownBox';
 import Button, { ButtonFill } from '../components/button';
 import { FetchServices } from '../helpers/uiFetch';
+import {serviceSub} from '../helpers/serviceSubscription';
 import Loading from '../components/loading';
 //import { ButtonFill } from '../components/button';
 import { Theme } from '../core/theme';
@@ -28,6 +29,7 @@ export default function Home({ navigation }) {
 
         if (selectedService) {
             var _serviceDetails = uiData.find(det => det.id === selectedService);
+            console.log(".....................................................")
             console.log("selected Service........................" + JSON.stringify(_serviceDetails));
             setServiceDetails(_serviceDetails);
         }
@@ -74,7 +76,12 @@ export default function Home({ navigation }) {
                             paddingVertical: 2,
                         }}
                         mode="contained"
-                        onPress={() => navigation.navigate('Submit')}>
+                        onPress={async () => {
+                            var res = await serviceSub(serviceDetails.serviceName, getTotalPayable())
+                            console.log("RESPONSE..................." + res)
+                            navigation.navigate('Submit')
+                            }}
+                        >
                         Subscribe
                     </Button>
             );
