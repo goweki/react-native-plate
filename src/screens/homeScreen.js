@@ -79,7 +79,7 @@ export default function Home({ navigation }) {
                         onPress={async () => {
                             var res = await serviceSub(serviceDetails.serviceName, getTotalPayable())
                             console.log("RESPONSE..................." + res)
-                            navigation.navigate('Submit')
+                            navigation.navigate('Subscriptions')
                             }}
                         >
                         Subscribe

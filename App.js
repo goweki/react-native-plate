@@ -6,7 +6,7 @@ import StartScreen from './src/screens/startScreen';
 import LoginScreen from './src/screens/loginScreen';
 import SignupScreen from './src/screens/signupScreen';
 import HomeScreen from './src/screens/homeScreen';
-import SubmitScreen from './src/screens/submitScreen';
+import SubscriptionsScreen from './src/screens/subscriptionsScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //import Icon as IconA  from 'react-native-vector-icons/AntDesign';
 import { Theme } from './src/core/theme';
@@ -71,7 +71,7 @@ export default function App() {
           )
           })} 
           />
-        <Stack.Screen name="Submit" component={SubmitScreen} />
+        <Stack.Screen name="Subscriptions" component={SubscriptionsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </SafeAreaView>

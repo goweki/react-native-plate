@@ -6,7 +6,7 @@ import Button from '../components/button';
 import Loading from '../components/loading';
 import { Theme } from '../core/theme';
 
-export default function SubmitScreen({ navigation }) {
+export default function SubscriptionsScreen({ navigation }) {
     const [isloading, setLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(null);
 
