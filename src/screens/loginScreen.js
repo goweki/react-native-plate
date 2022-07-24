@@ -7,14 +7,17 @@ import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
 import { UserAuth } from '../helpers/userAuthentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loading from '../components/loading';
 
 export default function LoginScreen({ navigation }) {
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
     const [networkError, setNetworkError] = useState(false);
     const [authenticationError, setauthenticationError] = useState(false);
 
     const onLoginPressed = async () => {
+        setIsLoading(true)
         setNetworkError(false);
         setauthenticationError(false);
         const emailError = emailValidator(email.value);
@@ -22,6 +25,7 @@ export default function LoginScreen({ navigation }) {
         if (emailError || passwordError) {
             setEmail({ ...email, error: emailError });
             setPassword({ ...password, error: passwordError });
+            setIsLoading(false)
             return;
         }
 
@@ -31,6 +35,7 @@ export default function LoginScreen({ navigation }) {
             console.log("........................................");
             console.log('Check internet connection and try again.... ');
             setNetworkError(true);
+            setIsLoading(false)
             return;
         }
 
@@ -38,6 +43,7 @@ export default function LoginScreen({ navigation }) {
             console.log(".............................................");
             //console.log('Authentication failed, check credentials.... ');
             setauthenticationError(true);
+            setIsLoading(false)
             return;
         }
 
@@ -73,6 +79,10 @@ export default function LoginScreen({ navigation }) {
         }
         return null;
     };
+
+    if (isLoading) {
+        return (<Loading />)
+    }
 
     return (
         <View style={styles.canvas}>

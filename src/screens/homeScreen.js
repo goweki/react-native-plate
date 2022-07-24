@@ -44,7 +44,7 @@ export default function Home({ navigation }) {
                         <DataTable.Cell textStyle={{fontWeight:'bold'}}>{serviceDetails.serviceName}</DataTable.Cell>
                     </DataTable.Row>
                     <DataTable.Row>
-                        <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Price </DataTable.Cell>
+                        <DataTable.Cell textStyle={{color:Theme.colors.grayFade2}}>Price (Ksh.) </DataTable.Cell>
                         <DataTable.Cell>{serviceDetails.pricing}</DataTable.Cell>
                     </DataTable.Row>
                     <DataTable.Row>

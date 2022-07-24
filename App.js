@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { BackHandler, StyleSheet, StatusBar, SafeAreaView, View, Text } from 'react-native';
+import { Alert, BackHandler, StyleSheet, StatusBar, SafeAreaView, View, Text } from 'react-native';
 import StartScreen from './src/screens/startScreen';
 import LoginScreen from './src/screens/loginScreen';
 import SignupScreen from './src/screens/signupScreen';
@@ -11,16 +11,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import Icon as IconA  from 'react-native-vector-icons/AntDesign';
 import { Theme } from './src/core/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import RNExitApp from 'react-native-exit-app';
 
 //const backIcon = <Icon name="arrow-left" size={30} color={Theme.colors.clearWhite} />;
 const Stack = createStackNavigator();
 
-async function exit(){
-  await AsyncStorage.removeItem('token')
+/*async function exit() {
+  await AsyncStorage.removeItem('token');
   BackHandler.exitApp();
   return false;
-}
+}*/
 
 export default function App() {
   return (
@@ -44,15 +43,33 @@ export default function App() {
           />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignupScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{
-          headerRight: () => (
+        <Stack.Screen name="Home" component={HomeScreen} options= {
+        ({ navigation }) => ({
+          headerRight: ()=>(
             <Icon.Button
               name="close"
               color={Theme.colors.clearWhite}
-              onPress={()=>exit()}
+              onPress={async ()=>{ Alert.alert(
+                  "",
+                  "Do you wish to sign out?",
+                  [ { text: "Cancel"},
+                    {},
+                    {text: 'Logout', onPress: async () => {
+                      await AsyncStorage.removeItem('token');
+                      await navigation.reset({
+                          index: 0,
+                          routes: [{ name: 'Welcome' }],
+                      });
+                      //BackHandler.exitApp()
+                      }
+                    },
+                  ],
+                  {cancelable: true}
+              )
+              }}
             />
           )
-          }} 
+          })} 
           />
         <Stack.Screen name="Submit" component={SubmitScreen} />
       </Stack.Navigator>
