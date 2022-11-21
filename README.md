@@ -1,6 +1,6 @@
 # react-native plate
 
-react-native playground
+template for react-native app: with expo
 
 # Credentials
 
