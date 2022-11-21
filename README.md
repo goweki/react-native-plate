@@ -1,4 +1,4 @@
-# ncba_assessment
+# react-native plate
 
 react-native playground
 
